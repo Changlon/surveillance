@@ -1,0 +1,10 @@
+{
+  "name": "surveillance",
+  "version": "1.0.0",
+  "description": "网站的监控",
+  "main": "src/index.js",
+  "repository": "https://github.com/Changlon/surveillance",
+  "author": "Changlon",
+  "license": "MIT",
+  "private": false
+}
