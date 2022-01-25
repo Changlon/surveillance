@@ -68,10 +68,34 @@ function notify(name,content,update,url) {
 }
 
 
+
+/**
+ * 生成callback
+ * @param {*} parser 
+ */
+function generateCallBack(parser) { 
+   return commonParseHandler.bind(this,parser)() 
+}
+
+
+
 module.exports = [
     {
         uri: "https://www.ganseea.cn/html/tzgg/",
-        callback:commonParseHandler.bind(this,$=>{
+        // callback:commonParseHandler.bind(this,$=>{
+        //     const name = $('title').text().trim()  
+        //     const ul =  $('.partR > .ch-list > ul') 
+        //     const url =  "https://www.ganseea.cn" + ul.find('li').first().find('a').attr('href')
+        //     const content = ul.find('li').first().find('a').text().trim() 
+        //     const update = ul.find('li').first().find('.ennum').text() 
+        //     return {
+        //         name,
+        //         content,
+        //         update,
+        //         url
+        //     }
+        // })()
+        callback:generateCallBack.call(this,$=>{
             const name = $('title').text().trim()  
             const ul =  $('.partR > .ch-list > ul') 
             const url =  "https://www.ganseea.cn" + ul.find('li').first().find('a').attr('href')
@@ -83,7 +107,7 @@ module.exports = [
                 update,
                 url
             }
-        })()
+        })
     }
 ]
 
