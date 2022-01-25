@@ -1,5 +1,3 @@
-
-const parse = require('koa-xml-body/lib/xml-parser')
 const req = require('request') 
 const {domain,PORT,notifyPath} = require('../config/server.config')
 const {
