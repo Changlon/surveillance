@@ -3,9 +3,10 @@ const {domain,PORT,notifyPath} = require('../config/server.config')
 const {
     date2StrFormat_$01
 } = require('../utils/date')
-const file = require('../utils/file')
+const fileHelper = require('../utils/file') 
+const list = require('../../list.json') 
+const cheerio = require('cheerio')
 
-const fileHelper = require('../utils/file')
 /**
  * 通知公众号更新
  * @param {*} name 
@@ -55,8 +56,16 @@ function notify(name,content,update,url) {
         const todayCacheIndex = date2StrFormat_$01(new Date(),"%Y-%MM-%DD")
         const isPushed = cacheData[todayCacheIndex]  && 
                          cacheData[todayCacheIndex][uri]  
-   
-        if(date2StrFormat_$01(new Date(),"%Y年%MM月%DD日")=== update && !isPushed ) { 
+        console.log(name,uri,update) 
+                         
+        if(
+            (
+                date2StrFormat_$01(new Date(),"%Y年%MM月%DD日")=== update  || 
+                date2StrFormat_$01(new Date(),"%Y-%MM-%DD")=== update || 
+                date2StrFormat_$01(new Date(),"%Y.%MM.%DD")=== update 
+            )
+        
+        && !isPushed ) { 
             console.log(`notify : ${uri} name : ${name} update:${update} content:${content} `) 
             notify(name,content,update,url) 
             if(!cacheData[todayCacheIndex]) cacheData[todayCacheIndex] = {} 
@@ -78,39 +87,52 @@ function generateCallBack(parser) {
 }
 
 
-
-module.exports = [
+/**
+ * 生成任务对象
+ * @param {*} param0 
+ */
+function generate(
     {
-        uri: "https://www.ganseea.cn/html/tzgg/",
-        // callback:commonParseHandler.bind(this,$=>{
-        //     const name = $('title').text().trim()  
-        //     const ul =  $('.partR > .ch-list > ul') 
-        //     const url =  "https://www.ganseea.cn" + ul.find('li').first().find('a').attr('href')
-        //     const content = ul.find('li').first().find('a').text().trim() 
-        //     const update = ul.find('li').first().find('.ennum').text() 
-        //     return {
-        //         name,
-        //         content,
-        //         update,
-        //         url
-        //     }
-        // })()
+        uri,
+        ulSelector,
+        updateSelector,
+        urlPrefix,
+        headers
+    }
+) {  
+    return {
+        uri:uri,
         callback:generateCallBack.call(this,$=>{
-            const name = $('title').text().trim()  
-            const ul =  $('.partR > .ch-list > ul') 
-            const url =  "https://www.ganseea.cn" + ul.find('li').first().find('a').attr('href')
+            const name = $('title').text().trim()   
+            // console.log(name)
+            const ul =  $(ulSelector) 
+            const url =  urlPrefix + ul.find('li').first().find('a').attr('href')
             const content = ul.find('li').first().find('a').text().trim() 
-            const update = ul.find('li').first().find('.ennum').text() 
+            let update = ul.find('li').first().find(updateSelector).text().replace("[","").replace("]","").trim() 
+            update = (update.match(/\d{4}-\d{1,2}-\d{1,2}/g) && update.match(/\d{4}-\d{1,2}-\d{1,2}/g)[0] ) || 
+                     update 
             return {
                 name,
                 content,
                 update,
                 url
             }
-        })
+        }),
+        headers
     }
-]
+}
 
+
+
+module.exports = list.map(itor=> { 
+    return generate(itor) 
+})
+
+
+// req("http://gxt.gansu.gov.cn/gxt/c107573/infolist.shtml",(err,res,body)=>{
+//     if(err) return  console.log(err) 
+//     console.log(res.headers)
+// })
 
 
  

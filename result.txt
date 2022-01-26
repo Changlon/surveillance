@@ -1,0 +1,99 @@
+{
+    "uri":"https://www.ganseea.cn/html/tzgg/",
+    "ulSelector":".partR > .ch-list > ul",
+    "updateSelector":".ennum",
+    "urlPrefix":"https://www.ganseea.cn"
+},
+{
+    "uri":"http://www.moe.gov.cn/jyb_xxgk/s5743/s5744/",
+    "ulSelector":"#list",
+    "updateSelector":"span",
+    "urlPrefix":"http://www.moe.gov.cn/jyb_xxgk/s5743/s5744/"
+},
+
+{
+    "uri":"http://www.moe.gov.cn/jyb_xxgk/s5743/s5745/",
+    "ulSelector":"#list",
+    "updateSelector":"span",
+    "urlPrefix":"http://www.moe.gov.cn/jyb_xxgk/s5743/s5745/"
+},
+{
+    "uri":"http://www.moe.gov.cn/was5/web/search?channelid=239993",
+    "ulSelector":".scy_lbsj-right-nr > ul",
+    "updateSelector":"span",
+    "urlPrefix":""
+},
+
+{
+    "uri":"http://rsj.jiuquan.gov.cn/renshikaoshi/",
+    "ulSelector":".gsxw > ul",
+    "updateSelector":"span",
+    "urlPrefix":"http://rsj.jiuquan.gov.cn"
+},
+
+{
+    "uri":"http://rsj.baiyin.gov.cn/channels/channel_99_1.html",
+    "ulSelector":".column_title01 + div > ul",
+    "updateSelector":"span",
+    "urlPrefix":"http://rsj.baiyin.gov.cn"
+},
+
+{
+    "uri":"http://rsj.jiuquan.gov.cn/wangzhangonggao/",
+    "ulSelector":".gsxw > ul",
+    "updateSelector":"span",
+    "urlPrefix":"http://rsj.jiuquan.gov.cn"
+},
+
+{
+    "uri":"http://ks.rst.gansu.gov.cn/ncms/wzlb.shtml?mkbh=zlks",
+    "ulSelector":".ap",
+    "updateSelector":".you",
+    "urlPrefix":"http://ks.rst.gansu.gov.cn/ncms/"
+},
+
+{
+    "uri":"http://ks.rst.gansu.gov.cn/ncms/wzlb.shtml?mkbh=tzgg",
+    "ulSelector":".ap",
+    "updateSelector":".you",
+    "urlPrefix":"http://ks.rst.gansu.gov.cn/ncms/"
+},
+
+{
+    "uri":"http://rsj.tianshui.gov.cn/notice",
+    "ulSelector":".item-list>ul",
+    "updateSelector":"span",
+    "urlPrefix":"http://rsj.tianshui.gov.cn"
+},
+{
+    "uri":"https://www.longnan.gov.cn/4448268.html",
+    "ulSelector":".doc_list",
+    "updateSelector":".date",
+    "urlPrefix":""
+},
+
+{
+    "uri":"http://www.lzxq.gov.cn/system/count//0002003/003000000000/000/000/c0002003003000000000_000000075.shtml",
+    "ulSelector":".sj-news>ul",
+    "updateSelector":"i",
+    "urlPrefix":""
+},
+
+{
+    "uri":"http://rsj.linxia.gov.cn/list.php?fid=451",
+    "ulSelector":".list-b-t>ul",
+    "updateSelector":"p",
+    "urlPrefix":"http://rsj.linxia.gov.cn/"
+},
+
+{
+    "uri":"http://ldrsc.lzu.edu.cn/lzupage/B20130718091053.html",
+    "ulSelector":".lmain_item_con > ul",
+    "updateSelector":"span",
+    "urlPrefix":"http://ldrsc.lzu.edu.cn"
+}
+    
+
+
+
+

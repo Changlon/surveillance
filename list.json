@@ -1,0 +1,11 @@
+ [
+
+    {
+        "uri":"http://ldrsc.lzu.edu.cn/lzupage/B20130718091053.html",
+        "ulSelector":".lmain_item_con > ul",
+        "updateSelector":"span",
+        "urlPrefix":"http://ldrsc.lzu.edu.cn"
+    }
+    
+    
+]

@@ -14,7 +14,6 @@ module.exports = {
        return {
           json ,
           ok:() => {  
-            console.log("ok",json)  
             this.writeAsJson(json,path_) 
           }
        }
