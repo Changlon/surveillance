@@ -1,10 +1,10 @@
  [
 
     {
-        "uri":"http://ldrsc.lzu.edu.cn/lzupage/B20130718091053.html",
-        "ulSelector":".lmain_item_con > ul",
-        "updateSelector":"span",
-        "urlPrefix":"http://ldrsc.lzu.edu.cn"
+        "uri":"http://rsj.lanzhou.gov.cn/col/col10700/index.html",
+        "ulSelector":"#85007",
+        "updateSelector":"b", 
+        "urlPrefix":"http://rsj.lanzhou.gov.cn"
     }
     
     

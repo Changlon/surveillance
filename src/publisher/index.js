@@ -12,10 +12,8 @@ const spider = new Crawler({
     maxConnections: 1,
     rateLimit:1000
 }) 
-
-// spider.queue(targets)  
-
-schedule.scheduleJob("30 * * * * *",()=>{
-    spider.queue(targets)  
-}) 
+spider.queue(targets)  
+// schedule.scheduleJob("30 * * * * *",()=>{
+//     spider.queue(targets)  
+// }) 
 

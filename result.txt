@@ -91,7 +91,32 @@
     "ulSelector":".lmain_item_con > ul",
     "updateSelector":"span",
     "urlPrefix":"http://ldrsc.lzu.edu.cn"
+},
+
+{
+    "uri":"http://zwgk.dingxi.gov.cn/col/col12377/index.html?uid=38486&pageNum=3",
+    "ulSelector":"#38486",
+    "updateSelector":"b", 
+    "urlPrefix":"http://zwgk.dingxi.gov.cn"
+},
+
+{
+    "uri":"http://zwgk.dingxi.gov.cn/col/col12486/index.html?number=XA00708",
+    "ulSelector":"#40159",
+    "updateSelector":"b", 
+    "urlPrefix":"http://zwgk.dingxi.gov.cn"
+},
+
+{
+    "uri":"https://www.gswuwei.gov.cn/col/col177/index.html",
+    "ulSelector":"#8474",
+    "updateSelector":".ipnone", 
+    "urlPrefix":""
 }
+
+
+
+
     
 
 

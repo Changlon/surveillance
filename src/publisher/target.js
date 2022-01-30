@@ -3,9 +3,12 @@ const {domain,PORT,notifyPath} = require('../config/server.config')
 const {
     date2StrFormat_$01
 } = require('../utils/date')
-const fileHelper = require('../utils/file') 
+
 const list = require('../../list.json') 
+const f2json = require('f2json')() 
+const parseXmlString = require('xml2js').parseStringPromise    
 const cheerio = require('cheerio')
+const response = require('koa/lib/response')
 
 /**
  * 通知公众号更新
@@ -47,31 +50,39 @@ function notify(name,content,update,url) {
  * @returns 
  */
  function commonParseHandler (parser) {    
-     return function(err,res,done) {
-        if(err) return console.debug(err) 
-        const {name,content,update,url} = parser(res.$)   
-        const cache = fileHelper.readAsJson("../../cache.json")
-        const cacheData = cache.json 
+     return async function(err,res,done) {
+        
+        if(err) {
+            return console.debug(err) 
+        } 
+
+        console.log(res.body)
+
+        const {name,content,update,url} = await Promise.resolve(parser(res.$))  
+        
+        let {json,ok} = f2json.file2json("../../cache.json")  
         const uri = this.uri
         const todayCacheIndex = date2StrFormat_$01(new Date(),"%Y-%MM-%DD")
-        const isPushed = cacheData[todayCacheIndex]  && 
-                         cacheData[todayCacheIndex][uri]  
+        const isPushed = json[todayCacheIndex]  && 
+                         json[todayCacheIndex][uri]  
+
         console.log(name,uri,update) 
                          
         if(
             (
                 date2StrFormat_$01(new Date(),"%Y年%MM月%DD日")=== update  || 
-                date2StrFormat_$01(new Date(),"%Y-%MM-%DD")=== update || 
+                date2StrFormat_$01(new Date(2021,11,7),"%Y-%MM-%DD")=== update || 
                 date2StrFormat_$01(new Date(),"%Y.%MM.%DD")=== update 
             )
         
         && !isPushed ) { 
             console.log(`notify : ${uri} name : ${name} update:${update} content:${content} `) 
             notify(name,content,update,url) 
-            if(!cacheData[todayCacheIndex]) cacheData[todayCacheIndex] = {} 
-            cacheData[todayCacheIndex][uri] = true   
-            cache.ok()
+            if(!json[todayCacheIndex]) json[todayCacheIndex] = {} 
+            json[todayCacheIndex][uri] = true   
+            ok() 
         }
+
         done()  
      }   
 }
@@ -102,14 +113,32 @@ function generate(
 ) {  
     return {
         uri:uri,
-        callback:generateCallBack.call(this,$=>{
+        callback:generateCallBack.call(this,async $=>{
             const name = $('title').text().trim()   
-            // console.log(name)
-            const ul =  $(ulSelector) 
-            const url =  urlPrefix + ul.find('li').first().find('a').attr('href')
-            const content = ul.find('li').first().find('a').text().trim() 
-            let update = ul.find('li').first().find(updateSelector).text().replace("[","").replace("]","").trim() 
-            update = (update.match(/\d{4}-\d{1,2}-\d{1,2}/g) && update.match(/\d{4}-\d{1,2}-\d{1,2}/g)[0] ) || 
+            let content,update,url 
+            let   ul =  $(ulSelector) 
+            // 对于xml数据格式的页面处理方法
+            if(
+                ul.children().first().attr("type") =="text/xml"
+              ) { 
+
+                const result =  await parseXmlString(ul.children().first().html()) 
+                const $ = cheerio.load( result.datastore.recordset[0].record[0]) 
+                content = $("a").text().trim() 
+                url = urlPrefix + $("a").attr("href")  
+                update = $(updateSelector).text().trim() 
+                return {
+                    name,
+                    content,
+                    update,
+                    url
+                }
+              }
+
+             url =  urlPrefix + ul.find('li').first().find('a').attr('href')
+             content = ul.find('li').first().find('a').text().trim() 
+             update = ul.find('li').first().find(updateSelector).text().replace("[","").replace("]","").trim() 
+             update = (update.match(/\d{4}-\d{1,2}-\d{1,2}/g) && update.match(/\d{4}-\d{1,2}-\d{1,2}/g)[0] ) || 
                      update 
             return {
                 name,
@@ -129,10 +158,6 @@ module.exports = list.map(itor=> {
 })
 
 
-// req("http://gxt.gansu.gov.cn/gxt/c107573/infolist.shtml",(err,res,body)=>{
-//     if(err) return  console.log(err) 
-//     console.log(res.headers)
-// })
 
 
  
