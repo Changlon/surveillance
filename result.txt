@@ -114,6 +114,25 @@
     "urlPrefix":""
 },
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
     "uri":"http://www.lzu.edu.cn/static/home/notice/",
     "ulSelector":"#news-list",
@@ -121,6 +140,131 @@
     "updateSelector":"small",
     "urlPrefix":""
 },
+
+
+{
+    "uri":"http://jwc.lzu.edu.cn/lzupage/B20101214042456.html",
+    "ulSelector":".rmain > ul",
+    "updateSelector":"span",
+    "urlPrefix":"http://jwc.lzu.edu.cn"
+},
+
+
+{
+    "uri":"http://jwc.lzu.edu.cn/lzupage/B20101214042519.html",
+    "ulSelector":".rmain > ul",
+    "updateSelector":"span",
+    "urlPrefix":"http://jwc.lzu.edu.cn"
+},
+
+{
+    "uri":"http://jwc.lzu.edu.cn/lzupage/B20130929112720.html",
+    "ulSelector":".rmain > ul",
+    "updateSelector":"span",
+    "urlPrefix":"http://jwc.lzu.edu.cn"
+},
+
+{
+    "uri":"http://jwc.lzu.edu.cn/lzupage/B20130912035856.html",
+    "ulSelector":".rmain > ul",
+    "updateSelector":"span",
+    "urlPrefix":"http://jwc.lzu.edu.cn"
+},
+
+{
+    "uri":"http://jwc.lzu.edu.cn/lzupage/B20101214042551.html",
+    "ulSelector":".rmain > ul",
+    "updateSelector":"span",
+    "urlPrefix":"http://jwc.lzu.edu.cn"
+},
+
+{
+    "uri":"http://jwc.lzu.edu.cn/lzupage/B20101214042540.html",
+    "ulSelector":".rmain > ul",
+    "updateSelector":"span",
+    "urlPrefix":"http://jwc.lzu.edu.cn"
+},
+
+{
+    "uri":"http://jwc.lzu.edu.cn/lzupage/B20130929112738.html",
+    "ulSelector":".rmain > ul",
+    "updateSelector":"span",
+    "urlPrefix":"http://jwc.lzu.edu.cn"
+},
+
+{
+    "uri":"http://hq.lzu.edu.cn/col_tzgg1/index/",
+    "ulSelector":".textlist",
+    "updateSelector":"span",
+    "urlPrefix":"http://hq.lzu.edu.cn"
+},
+
+{
+    "uri":"http://tyb.lzu.edu.cn/lzupage/B20110323105311.html",
+    "ulSelector":".list",
+    "updateSelector":"span",
+    "urlPrefix":"http://tyb.lzu.edu.cn"
+},
+
+{
+    "uri":"http://lib.lzu.edu.cn/tzgg/list.shtml",
+    "ulSelector":".list-unstyled",
+    "updateSelector":"span",
+    "urlPrefix":"http://lib.lzu.edu.cn"
+},
+
+{
+    "uri":"http://xgb.lzu.edu.cn/lzupage/B20190105103941.html",
+    "ulSelector":".lmain_item_con > ul",
+    "updateSelector":"span",
+    "urlPrefix":"http://xgb.lzu.edu.cn"
+},
+
+{
+    "uri":"http://ge.lzu.edu.cn/yjsxw/lm/103398.js",
+    "script":true, 
+    "scriptHandler":(scriptBody)=>{  
+        const data = scriptBody.find(item=> item.channelId ===103398 ? item:null ) 
+        return {
+            name: `${data.channelName}-${data.articleSource}` ,
+            content:data.articleTitle,
+            update:data.publishDate,
+            url:`http://ge.lzu.edu.cn${data.aurl}`
+        }
+    }
+},
+
+{
+    "uri":"http://zsb.lzu.edu.cn/zsbnew/lm/101426.js",
+    "script":true, 
+    "scriptHandler":(scriptBody)=>{  
+        const data = scriptBody.find(item=> item.channelId ===101426 ? item:null ) 
+        console.log(data)
+        return {
+            name: `${data.channelName}-${data.articleSource}` ,
+            content:data.articleTitle,
+            update:data.publishDate,
+            url:`${data.aurl}`
+        }
+    }
+},
+
+
+{
+    "uri":"https://job.lzu.edu.cn/html/68/article/list/list_1.html",
+    "ulSelector":".lmain_item_con > ul",
+    "updateSelector":"span",
+    "urlPrefix":"https://job.lzu.edu.cn"
+}
+
+
+    
+
+
+    
+
+
+
 
 
 

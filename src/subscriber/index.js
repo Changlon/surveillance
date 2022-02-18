@@ -40,24 +40,24 @@ router.all(notifyPath, async (ctx,next)=>{
     console.log(ctx.request.body)
     // const res = await weapp.pushTxtCustomerMsg("oOskj6NqnCG1C1eBSh0cz6H7GEZE",`${name} 更新通知 : <a href = '${url}' > ${content} </a> \n 更新时间:${update}`)  
     // TODO 获取vip的Openid批量发送
-    // const res = await weapp.pushTemplateMsg("oOskj6NqnCG1C1eBSh0cz6H7GEZE","_MAWPY1TfORuS0SZDLJFOXLUR33k42-IjD_E21U9qO0",{
-    //     name:{
-    //         value:name,
-    //         color:"#173177"
-    //     },
-    //     content:{
-    //         value:content,
-    //         color:"#173177"
-    //     },
-    //     update:{
-    //         value:update,
-    //         color:"#173177"
-    //     }
-    // },url)
+    const res = await weapp.pushTemplateMsg("oOskj6NqnCG1C1eBSh0cz6H7GEZE","_MAWPY1TfORuS0SZDLJFOXLUR33k42-IjD_E21U9qO0",{
+        name:{
+            value:name,
+            color:"#173177"
+        },
+        content:{
+            value:content,
+            color:"#173177"
+        },
+        update:{
+            value:update,
+            color:"#173177"
+        }
+    },url)
     
-    // ctx.body = res
+    ctx.body = res
 
-    ctx.body = {}
+    
 })
 
 app.use(koaXmlBody())

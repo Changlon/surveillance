@@ -4,7 +4,7 @@ const {
     date2StrFormat_$01
 } = require('../utils/date')
 
-const list = require('../../list.json') 
+const list = require('../../list.js') 
 const f2json = require('f2json')() 
 const parseXmlString = require('xml2js').parseStringPromise    
 const cheerio = require('cheerio')
@@ -56,8 +56,17 @@ function notify(name,content,update,url) {
            throw err
         } 
 
-        
-        const {name,content,update,url} = await Promise.resolve(parser(res.$))  
+        const isScript =this.script 
+
+        let info = {} 
+
+        if(isScript) {
+            info = await Promise.resolve( (this.scriptHandler && this.scriptHandler(res.scriptBody)) || {})
+        }else{
+            info = await Promise.resolve(parser(res.$))  
+        }
+
+        const {name,content,update,url} = info
         
         let {json,ok} = f2json.file2json("../../cache.json")  
         const uri = this.uri
@@ -69,13 +78,11 @@ function notify(name,content,update,url) {
           if(process.env.NODE_ENV === "development")   {
             console.log(name,uri,update,content,url) 
           } 
-          
-
-                         
+  
         if(
             (
                 date2StrFormat_$01(new Date(),"%Y年%MM月%DD日")=== update  || 
-                date2StrFormat_$01(new Date(),"%Y-%MM-%DD")=== update || 
+                date2StrFormat_$01(new Date(2022,1,17),"%Y-%MM-%DD")=== update || 
                 date2StrFormat_$01(new Date(),"%Y.%MM.%DD")=== update 
             )
         
@@ -113,10 +120,12 @@ function generate(
         liSelector,
         updateSelector,
         urlPrefix,
-        headers
+        headers,
+        ...other
     }
 ) {  
     return {
+        ...other,
         uri:uri,
         callback:generateCallBack.call(this,async $=>{
             const name = $('title').text().trim()   
