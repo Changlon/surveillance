@@ -19,6 +19,8 @@ const response = require('koa/lib/response')
  * @returns 
  */
 function notify(name,content,update,url) {  
+
+    
     return new Promise((r,j)=>{
         req.post({
             url:`${domain}:${PORT}${notifyPath}`,
@@ -29,9 +31,7 @@ function notify(name,content,update,url) {
                 url
             },
             callback(err,res,body){ 
-                console.log(err)
                 if(err) j(err)  
-                console.log(body)
                 r(body)
                 res
             }
@@ -53,11 +53,10 @@ function notify(name,content,update,url) {
      return async function(err,res,done) {
         
         if(err) {
-            return console.debug(err) 
+           throw err
         } 
 
-        console.log(res.body)
-
+        
         const {name,content,update,url} = await Promise.resolve(parser(res.$))  
         
         let {json,ok} = f2json.file2json("../../cache.json")  
@@ -71,13 +70,13 @@ function notify(name,content,update,url) {
         if(
             (
                 date2StrFormat_$01(new Date(),"%Y年%MM月%DD日")=== update  || 
-                date2StrFormat_$01(new Date(2021,11,7),"%Y-%MM-%DD")=== update || 
+                date2StrFormat_$01(new Date(),"%Y-%MM-%DD")=== update || 
                 date2StrFormat_$01(new Date(),"%Y.%MM.%DD")=== update 
             )
         
         && !isPushed ) { 
             console.log(`notify : ${uri} name : ${name} update:${update} content:${content} `) 
-            notify(name,content,update,url) 
+            notify(name,content,update,url)
             if(!json[todayCacheIndex]) json[todayCacheIndex] = {} 
             json[todayCacheIndex][uri] = true   
             ok() 
