@@ -112,7 +112,18 @@
     "ulSelector":"#8474",
     "updateSelector":".ipnone", 
     "urlPrefix":""
-}
+},
+
+{
+    "uri":"http://www.lzu.edu.cn/static/home/notice/",
+    "ulSelector":"#news-list",
+    "liSelector":".nopic",
+    "updateSelector":"small",
+    "urlPrefix":""
+},
+
+
+
 
 
 

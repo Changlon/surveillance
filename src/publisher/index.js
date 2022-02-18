@@ -27,7 +27,7 @@ function crawler() {
 }
 
 
-
+crawler()
 
 schedule.scheduleJob("30 * * * * *",()=>{
     try {

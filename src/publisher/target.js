@@ -65,7 +65,12 @@ function notify(name,content,update,url) {
         const isPushed = json[todayCacheIndex]  && 
                          json[todayCacheIndex][uri]  
 
-        console.log(name,uri,update) 
+        
+          if(process.env.NODE_ENV === "development")   {
+            console.log(name,uri,update,content,url) 
+          } 
+          
+
                          
         if(
             (
@@ -105,6 +110,7 @@ function generate(
     {
         uri,
         ulSelector,
+        liSelector,
         updateSelector,
         urlPrefix,
         headers
@@ -134,9 +140,9 @@ function generate(
                 }
               }
 
-             url =  urlPrefix + ul.find('li').first().find('a').attr('href')
-             content = ul.find('li').first().find('a').text().trim() 
-             update = ul.find('li').first().find(updateSelector).text().replace("[","").replace("]","").trim() 
+             url =  urlPrefix + ul.find(liSelector || 'li').first().find('a').attr('href')
+             content = ul.find(liSelector || 'li').first().find('a').text().trim() 
+             update = ul.find(liSelector || 'li').first().find(updateSelector).text().replace("[","").replace("]","").trim() 
              update = (update.match(/\d{4}-\d{1,2}-\d{1,2}/g) && update.match(/\d{4}-\d{1,2}-\d{1,2}/g)[0] ) || 
                      update 
             return {

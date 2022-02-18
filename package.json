@@ -20,10 +20,11 @@
     "request": "^2.88.2"
   },
   "scripts": {
-    "dev": "  node src/subscriber/index.js",
-    "spide": " node src/publisher/index.js"
+    "dev": "cross-env NODE_ENV=development  node src/subscriber/index.js",
+    "spide": "cross-env NODE_ENV=development node src/publisher/index.js"
   },
   "devDependencies": {
+    "cross-env": "7.0.3",
     "nodemon": "^2.0.15"
   }
 }
