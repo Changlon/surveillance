@@ -139,7 +139,9 @@ function generate(
                 const result =  await parseXmlString(ul.children().first().html()) 
                 const $ = cheerio.load( result.datastore.recordset[0].record[0]) 
                 content = $("a").text().trim() 
-                url = urlPrefix + $("a").attr("href")  
+                url = $("a").attr("href").startsWith("http")?  
+                        $("a").attr("href")
+                     :   urlPrefix + $("a").attr("href")
                 update = $(updateSelector).text().trim() 
                 return {
                     name,
