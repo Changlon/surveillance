@@ -4,6 +4,8 @@ const cheerio = require("cheerio")
 const schedule = require('node-schedule')
 const iconvLite = require("iconv-lite") 
 
+
+
 function crawler(targets) {
     for(let target of targets) { 
         request(target.uri,{
@@ -48,14 +50,14 @@ function crawler(targets) {
 
 crawler(targets)
 
-// schedule.scheduleJob("30 * * * * *",()=>{
-//     try {
-//         crawler()
-//      }catch(e) {
-//          console.error(`crawler 出现错误: ${e}`)
+schedule.scheduleJob("30 * * * * *",()=>{
+    try {
+        crawler(targets)
+     }catch(e) {
+         console.error(`crawler 出现错误: ${e}`)
          
-//      }
-// }) 
+     }
+}) 
 
 
 

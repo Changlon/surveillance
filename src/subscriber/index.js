@@ -28,6 +28,13 @@ weapp
 
 router.all("/wechat_debug",weapp.start())  
 
+
+
+const openids = [
+    "o6Y5S5jK3R2lCU0Y2jO8NcHPO4es",
+    "o6Y5S5kmgo7VwP7-kwVogreOIKEQ"
+]
+
 router.all(notifyPath, async (ctx,next)=>{ 
     console.log(`notify`)
     const body = ctx.request.body
@@ -38,24 +45,43 @@ router.all(notifyPath, async (ctx,next)=>{
     const update = body.update
 
     console.log(ctx.request.body)
-    // const res = await weapp.pushTxtCustomerMsg("oOskj6NqnCG1C1eBSh0cz6H7GEZE",`${name} 更新通知 : <a href = '${url}' > ${content} </a> \n 更新时间:${update}`)  
+
+
     // TODO 获取vip的Openid批量发送
-    const res = await weapp.pushTemplateMsg("oOskj6NqnCG1C1eBSh0cz6H7GEZE","_MAWPY1TfORuS0SZDLJFOXLUR33k42-IjD_E21U9qO0",{
-        name:{
-            value:name,
-            color:"#173177"
-        },
-        content:{
-            value:content,
-            color:"#173177"
-        },
-        update:{
-            value:update,
-            color:"#173177"
-        }
-    },url)
+
+    const  resData = [] 
+
+    for(let openid of openids) {
+        
+        const res = await weapp.pushTemplateMsg(openid,"Lawyo1mAdPxHSzpBfSS8GcFDq4s8gEuAzkZkUvfzYYU",{
+        
+            first:{
+                value:"更新提醒"
+            },
+            keyword1:{
+                value:name
+            },
+            keyword2:{
+                value:"济大助手服务号"
+            },
     
-    ctx.body = res
+            keyword3:{
+                value:update
+            },
+            keyword4:{
+                value:content
+            },
+            remark:{
+                value:""
+            }
+            
+        },url)
+
+        resData.push(res)
+    }
+    
+    
+    ctx.body = resData
 
     
 })

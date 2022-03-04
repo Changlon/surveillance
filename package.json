@@ -22,10 +22,14 @@
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development  node src/subscriber/index.js",
-    "spide": "cross-env NODE_ENV=development node src/publisher/index.js"
+    "spide": "cross-env NODE_ENV=development node src/publisher/index.js",
+    "build": "rimraf dist && webpack"
   },
   "devDependencies": {
     "cross-env": "7.0.3",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "rimraf": "3.0.2",
+    "webpack": "5.70.0",
+    "webpack-cli": "4.9.2"
   }
 }

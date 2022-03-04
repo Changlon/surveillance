@@ -8,7 +8,7 @@ const list = require('../../list.js')
 const f2json = require('f2json')() 
 const parseXmlString = require('xml2js').parseStringPromise    
 const cheerio = require('cheerio')
-const response = require('koa/lib/response')
+const fs = require('fs')
 
 /**
  * 通知公众号更新
@@ -68,7 +68,10 @@ function notify(name,content,update,url) {
 
         const {name,content,update,url} = info
         
-        let {json,ok} = f2json.file2json("../../cache.json")  
+        if(!fs.existsSync("./cache.json")) {
+            f2json.json2file("./cache.json",{})
+        }
+        let {json,ok} = f2json.file2json("./cache.json")  
         const uri = this.uri
         const todayCacheIndex = date2StrFormat_$01(new Date(),"%Y-%MM-%DD")
         const isPushed = json[todayCacheIndex]  && 
@@ -76,7 +79,12 @@ function notify(name,content,update,url) {
 
         
           if(process.env.NODE_ENV === "development")   {
-            console.log(name,uri,update,content,url) 
+            console.log(`name:${name}`)
+            console.log(`uri:${uri}`)
+            console.log(`update:${update}`)
+            console.log(`content:${content}`)
+            console.log(`url:${url}`) 
+            console.log("===========================================================================")
           } 
   
         if(
@@ -131,6 +139,8 @@ function generate(
             const name = $('title').text().trim()   
             let content,update,url 
             let   ul =  $(ulSelector) 
+
+          
             // 对于xml数据格式的页面处理方法
             if(
                 ul.children().first().attr("type") =="text/xml"
@@ -151,10 +161,26 @@ function generate(
                 }
               }
 
-             url =  urlPrefix + ul.find(liSelector || 'li').first().find('a').attr('href')
+              
+             
+            //  const href =  ul.find(liSelector || 'li').first().find('a').attr('href') || ""  
+
+            let href = "" 
+
+            ul.find(liSelector || 'li').first().find('a').each((i,ele)=>{
+                  href = ele.attribs.href
+            })
+
+             url =  href.startsWith("http") ?  
+                     href:
+                      urlPrefix + href 
+
              content = ul.find(liSelector || 'li').first().find('a').text().trim() 
-             update = ul.find(liSelector || 'li').first().find(updateSelector).text().replace("[","").replace("]","").trim() 
-             update = (update.match(/\d{4}-\d{1,2}-\d{1,2}/g) && update.match(/\d{4}-\d{1,2}-\d{1,2}/g)[0] ) || 
+             update = updateSelector ?  
+             ul.find(liSelector || 'li').first().find(updateSelector).text().replace("[","").replace("]","").trim() :
+             ul.find(liSelector || 'li').first().text().replace("[","").replace("]","").trim() 
+             
+             update = (update.match(/\d{2,4}-\d{1,2}-\d{1,2}/g) && update.match(/\d{2,4}-\d{1,2}-\d{1,2}/g)[0] ) || 
                      update 
             return {
                 name,
